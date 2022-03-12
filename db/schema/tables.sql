@@ -25,5 +25,3 @@ CREATE TABLE points (
 );
 
 
-ALTER TABLE maps
-ADD point_id INTEGER REFERENCES points(id) ON DELETE CASCADE;
