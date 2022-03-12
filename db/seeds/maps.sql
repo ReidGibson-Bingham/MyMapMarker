@@ -1,5 +1,6 @@
-INSERT INTO maps ()
-VALUES ();
+INSERT INTO maps (title)
+VALUES ('my map 1'),
+('my map 2');
 
 
 

@@ -1,6 +1,5 @@
-
-INSERT INTO points ()
-VALUES ();
+INSERT INTO points (title)
+VALUES ("test1");
 
 
 
