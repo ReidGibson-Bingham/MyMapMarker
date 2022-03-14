@@ -50,11 +50,11 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", { title: 'Home Page' });
 });
 
 app.get("/about", (req, res) => {
-  res.render("about");
+  res.render("about", { title: 'About Page', layout: './layouts/sidebar' });
 });
 
 app.listen(PORT, () => {

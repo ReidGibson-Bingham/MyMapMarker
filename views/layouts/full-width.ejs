@@ -15,17 +15,18 @@
   <script type="text/javascript" src="../scripts/app.js"></script>
 
 
-  <title>Layout Template</title>
+  <title><%- title %></title>
 </head>
 <body>
 
-    <div class=""wrapper">
-    <header>header</header>
+    <div class="wrapper">
+
+      <%- include('../partials/header.ejs') %>
       <main>
         <%- body %>
       </main>
-      <footer>footer</footer>
-      
+      <%- include('../partials/footer.ejs') %>
+
     </div>
 </body>
 </html>
