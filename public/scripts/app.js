@@ -58,7 +58,8 @@ function addMarker(location, map) {
     label: labels[labelIndex++ % labels.length],
     map: map,
     //optimized: false,
-    title: `${JSON.stringify(location)}`,
+    //location is an object literal
+    title: `lat:${JSON.stringify(location.lat())}, lng:${JSON.stringify(location.lng())}`,
   });
   console.log(JSON.stringify(newMarker.position));
 
