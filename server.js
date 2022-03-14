@@ -9,10 +9,19 @@ const app = express();
 const morgan = require("morgan");
 
 // PG database client/connection setup
-const { Pool } = require("pg");
+const { Pool, Client } = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
+// const someData = require("./public/scripts/app.js");
+const bodyParser = require("body-parser");
 db.connect();
+
+const pool = new Pool({
+  user: 'vagrant',
+  password: '123',
+  host: 'localhost',
+  database: 'midterm'
+});
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -48,10 +57,43 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
+pool.query(
+  "INSERT INTO maps(title) VALUES('Pool.query test');",
+  (err, res) => {
+    // console.log(err, res);
+  }
+);
+
+pool.query(
+  "SELECT * FROM maps;",
+  (err, res) => {
+    // console.log(err, res);
+
+  }
+);
+
+
 app.get("/", (req, res) => {
+  const input = req.query.text;
+  console.log("req.query.text: ", input);
+  console.log("test route");
+  pool.query(
+    `INSERT INTO points(title) VALUES('${input}');`,
+    (err, res) => {
+      // console.log(err, res);
+    }
+  );
   res.render("index");
+
 });
+
+pool.end();
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+
+
+

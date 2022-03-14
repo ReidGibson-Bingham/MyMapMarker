@@ -75,3 +75,5 @@ function addMarker(location, map) {
     })(newMarker, infowindow)
   );
 }
+
+

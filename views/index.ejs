@@ -13,14 +13,28 @@
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
 
+  <script type="text/javascript" src "../server.js"></script>
+
 
 
 </head>
 
 <body>
     <h1> hello world</h1>
+    <section id="new-tweet">
 
-    <h3>My Google Maps Demo</h3>
+      <form method="get" action="/" id="form">
+
+        <textarea name="text" placeholder= "what are you humming about?" id="tweet-text"></textarea>
+
+        <div>
+          <button class="button" type="submit">Tweet</button>
+          <output name="counter" class="counter" for="tweet-text">140</output>
+        </div>
+
+    </form>
+
+    </section>
     <!--The div element for the map -->
     <div id="map"></div>
 
