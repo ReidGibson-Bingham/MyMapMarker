@@ -50,11 +50,15 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
-  res.render("index", { title: 'Home Page' });
+  res.render("index", { title: 'Home Page', layout: './layouts/full-width' });
 });
 
-app.get("/about", (req, res) => {
-  res.render("about", { title: 'About Page', layout: './layouts/sidebar' });
+app.get("/allEats", (req, res) => {
+  res.render("allEats", { title: 'All Babies', layout: './layouts/full-width' });
+});
+
+app.get("/favoriteEats", (req, res) => {
+  res.render("favoriteEats", { title: 'New Rescue', layout: './layouts/full-width' });
 });
 
 app.listen(PORT, () => {
