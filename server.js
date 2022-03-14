@@ -92,6 +92,14 @@ app.get("/", (req, res) => {
 
 });
 
+app.post("/", (req, res) => {
+  console.log("req.body:", req.body);
+  console.log("JSON req.body:", JSON.parse(req.body.position));
+  return res.json({
+    message: "successful"
+  });
+})
+
 // pool.end();
 
 
