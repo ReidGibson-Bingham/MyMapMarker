@@ -75,19 +75,24 @@ pool.query(
 
 app.get("/", (req, res) => {
   const input = req.query.text;
-  console.log("req.query.text: ", input);
-  console.log("test route");
+
+  // console.log("req.query.text: ", input);
+  // console.log("test route");
+  console.log("req:", req);
   pool.query(
-    `INSERT INTO points(title) VALUES('${input}');`,
+    `INSERT INTO points(title) VALUES('${input}')RETURNING *`,
     (err, res) => {
-      // console.log(err, res);
+
+      console.log("input into database:", input);
+      // console.log("res:", res);
     }
   );
+
   res.render("index");
 
 });
 
-pool.end();
+// pool.end();
 
 
 app.listen(PORT, () => {
