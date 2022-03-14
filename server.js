@@ -14,8 +14,6 @@ const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
 db.connect();
 
-
-
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -51,23 +49,9 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
-  // console.log("res:", res);
-
   res.render("index");
-
 });
-
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-
-
-// we need to get the data from google (make multiple pins)
-// we need to parse the data // or we pass it fully
-// we need to store the data into the database
-//
-
-
-// V below is the google code
-
