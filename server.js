@@ -21,6 +21,7 @@ db.connect();
 app.use(morgan("dev"));
 app.use(express.static("public"));
 app.use(expressLayouts);
+app.set('layout', './layouts/full-width');
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
@@ -50,6 +51,10 @@ app.use("/api/widgets", widgetsRoutes(db));
 
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+app.get("/about", (req, res) => {
+  res.render("about");
 });
 
 app.listen(PORT, () => {
