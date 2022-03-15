@@ -74,21 +74,21 @@ pool.query(
 
 
 app.get("/", (req, res) => {
+
   const input = req.query.text;
 
   // console.log("req.query.text: ", input);
   // console.log("test route");
   // console.log("req:", req);
-  pool.query(
-    `INSERT INTO points(title) VALUES('${input}')RETURNING *`,
+  const markerData = pool.query(
+    `SELECT latitude, longitude FROM points;`,
     (err, res) => {
-
-      console.log("input into database:", input);
+      return res;
       // console.log("res:", res);
     }
   );
 
-  res.render("index");
+  // res.render("index");
 
 });
 

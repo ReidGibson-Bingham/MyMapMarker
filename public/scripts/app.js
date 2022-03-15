@@ -2,6 +2,9 @@
 
     // Initialize and add the map
     function initMap() {
+
+      // $.get()
+
       // The location of Richmoind 49.16186001171447, -123.13926987802597
       const richmond = { lat: 49.16186001171447, lng: -123.13926987802597 };
       // The map, centered at richmond
