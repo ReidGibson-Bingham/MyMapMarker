@@ -125,7 +125,3 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
 
-
-/* .env file
-add below to your .env file
-GOOGLE_MAP_API_KEY=AIzaSyBWxHpGLzdtUW8alNMHhfiQgSHpPW6vsZk */
