@@ -8,6 +8,7 @@ function initMap() {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 13,
     center: richmond,
+    //mapId: 'richmond', //give a id to map
   });
 
   // Create an info window to share between markers.
@@ -52,6 +53,8 @@ let newMarker = [];
 // Adds a marker to the map.
 function addMarker(location, map) {
   // Add the marker at the clicked location, and add the next-available label
+  let lat = JSON.stringify(location.lat());
+  let lng = JSON.stringify(location.lat());
   // from the array of alphabetical characters.
   let newMarker = new google.maps.Marker({
     position: location,
@@ -59,9 +62,23 @@ function addMarker(location, map) {
     map: map,
     //optimized: false,
     //location is an object literal
-    title: `lat:${JSON.stringify(location.lat())}, lng:${JSON.stringify(location.lng())}`,
+    title: `lat:${JSON.stringify(location.lat())}, lng:${JSON.stringify(
+      location.lng()
+    )}`,
   });
-  console.log(JSON.stringify(newMarker.position));
+  console.log(lat,lng);
+
+  $.ajax({
+    url: "/api/usercoor",
+    data: {
+      lat,
+      lng
+    },
+    method: "POST",
+
+  });
+
+
 
   const infowindow = new google.maps.InfoWindow();
 
