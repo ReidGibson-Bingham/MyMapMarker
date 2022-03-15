@@ -88,10 +88,13 @@ function addMarker(location, map) {
     '<div id="bodyContent">' +
     '<form id="point-form">'+
           '<label id = "text-label" for="point-text">'+
+          "Title: "+
+          "</label>"+
+          '<input id="point-text" name="text" placeholder="add your title">'+
+          '<label id = "text-label" for="point-text">'+
           "Description: "+
           "</label>"+
-          '<textarea id="point-text" name="text">'+
-          "  descriptions goes here   "+
+          '<textarea id="point-text" name="text" placeholder="type your description">'+
           "</textarea>"+
           '<footer class="button-container">'+
             '<button id="button-save" type="submit">'+
