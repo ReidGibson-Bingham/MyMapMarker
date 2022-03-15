@@ -15,9 +15,9 @@ CREATE TABLE users (
 CREATE TABLE maps (
   id SERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(255) NOT NULL,
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
-  latitude float,
-  longitude float,
+  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  latitude FLOAT,
+  longitude FLOAT,
   description TEXT,
   created_at TIMESTAMP,
   favourite_map BOOLEAN
@@ -27,11 +27,9 @@ CREATE TABLE points (
   id SERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(255) NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  map_id INTEGER REFERENCES maps(id) ON DELETE CASCADE
-  -- image
-  -- description
-  latitude float,
-  longitude float,
+  map_id INTEGER REFERENCES maps(id) ON DELETE CASCADE,
+  latitude FLOAT(24),
+  longitude FLOAT(24),
   created_at TIMESTAMP,
   favourite_point BOOLEAN
 );

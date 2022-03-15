@@ -78,7 +78,7 @@ app.get("/", (req, res) => {
 
   // console.log("req.query.text: ", input);
   // console.log("test route");
-  console.log("req:", req);
+  // console.log("req:", req);
   pool.query(
     `INSERT INTO points(title) VALUES('${input}')RETURNING *`,
     (err, res) => {
@@ -93,11 +93,20 @@ app.get("/", (req, res) => {
 });
 
 app.post("/", (req, res) => {
-  console.log("req.body:", req.body);
-  console.log("JSON req.body:", JSON.parse(req.body.position));
-  return res.json({
-    message: "successful"
-  });
+  // console.log("req.body:", req.body);
+  // console.log("JSON req.body:", JSON.parse(req.body.position));
+  let pos = JSON.parse(req.body.position);// for some reason i need to store the position into a variable to extract the latitude and longitude keys
+  // let title = JSON.parse(req.body.title);
+  console.log("latitude", pos.lat);
+  console.log("longitude", pos.lng);
+  // const input = req.body.position;
+  pool.query(
+    `INSERT INTO points(title, latitude, longitude)
+    VALUES(${pos.lat}, ${pos.lat}, ${pos.lng})`,
+    (err, res) => {
+      // console.log("promise res:", res);
+    }
+  );
 })
 
 // pool.end();
