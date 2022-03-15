@@ -31,6 +31,7 @@ app.use(express.static("public"));
 app.use(expressLayouts);
 app.set('layout', './layouts/full-width');
 app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
@@ -69,6 +70,62 @@ app.get("/favoriteEats", (req, res) => {
   res.render("favoriteEats", { title: 'New Rescue', layout: './layouts/full-width' });
 });
 
+pool.query(
+  "INSERT INTO maps(title) VALUES('Pool.query test');",
+  (err, res) => {
+    // console.log(err, res);
+  }
+);
+
+pool.query(
+  "SELECT * FROM maps;",
+  (err, res) => {
+    // console.log(err, res);
+
+  }
+);
+
+
+app.get("/", (req, res) => {
+  const input = req.query.text;
+
+  // console.log("req.query.text: ", input);
+  // console.log("test route");
+  // console.log("req:", req);
+  pool.query(
+    `INSERT INTO points(title) VALUES('${input}')RETURNING *`,
+    (err, res) => {
+
+      console.log("input into database:", input);
+      // console.log("res:", res);
+    }
+  );
+
+  res.render("index");
+
+});
+app.post("/", (req, res) => {
+  // console.log("req.body:", req.body);
+  // console.log("JSON req.body:", JSON.parse(req.body.position));
+  let pos = JSON.parse(req.body.position);// for some reason i need to store the position into a variable to extract the latitude and longitude keys
+  // let title = JSON.parse(req.body.title);
+  console.log("latitude", pos.lat);
+  console.log("longitude", pos.lng);
+  // const input = req.body.position;
+  pool.query(
+    `INSERT INTO points(title, latitude, longitude)
+    VALUES(${pos}, ${pos.lat}, ${pos.lng})`,
+    (err, res) => {
+      // console.log("promise res:", res);
+    }
+  );
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+
+/* .env file
+add below to your .env file
+GOOGLE_MAP_API_KEY=AIzaSyBWxHpGLzdtUW8alNMHhfiQgSHpPW6vsZk */
