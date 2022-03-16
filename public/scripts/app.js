@@ -31,7 +31,8 @@ function initMap() {
   });
 
   // Create an info window to share between markers.
-  const infowindow = new google.maps.InfoWindow();
+  // const infowindow = new google.maps.InfoWindow();
+  // ^^ this one may be redundant
 
   // The marker, positioned at richmond
   const marker = new google.maps.Marker({
@@ -82,14 +83,18 @@ function addMarker(location, map) {
     //optimized: false,
     title: `${JSON.stringify(location)}`,
   });
-  console.log("google location:", location);
+  console.log("newMarker.title:", newMarker.title);
+  console.log("newMarker.label:", newMarker.label);
   console.log("lat and long: ", JSON.stringify(newMarker.position));
+
 
   if (newMarker.position) {
     $.ajax({
       type: "POST",
-      url: "/",
-      data: {position: JSON.stringify(newMarker.position)},
+      url: "/api/routes/point/",
+      data: {
+        position: JSON.stringify(newMarker.position),
+      },
       // data: {message: "body"},
       success: () => {
         console.log("success");
@@ -98,9 +103,40 @@ function addMarker(location, map) {
     });
   }
 
+  const contentString =
+  '<div id="content">' +
+  '<div id="siteNotice">' +
+  "</div>" +
+  '<h1 id="firstHeading" class="firstHeading">Intersting Point</h1>' +
+  '<div id="bodyContent">' +
+  '<form id="point-form">'+
+        '<label id = "text-label" for="point-text">'+
+        "Description: "+
+        "</label>"+
+        '<textarea id="point-text" name="text">'+
+        "  descriptions goes here   "+
+        "</textarea>"+
+        '<footer class="button-container">'+
+          '<button id="button-save" type="submit">'+
+          "Save"+
+          "</button>"+
+          '<button id="button-edit" type="submit">'+
+          "edit"+
+          "</button>"+
+          '<button id="button-delete" type="submit">'+
+          "Delete"+
+          "</button>"+
+        "</footer>"+
+  "</form>"+
+  '<p id="time-stamp">'+
+  "(last visited June 22, 2009).</p>" +
+  "</div>" +
+  "</div>";
+const infowindow = new google.maps.InfoWindow({
+  content: contentString,
+});
+  // ^^ this event listener is for the info window on the marker
 
-  const infowindow = new google.maps.InfoWindow();
-  // this event listener is for the info window on the marker
   google.maps.event.addListener(
     newMarker,
     "click",

@@ -47,54 +47,56 @@ app.use(express.static("public"));
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const mapRoutes = require("./routes/map");
+const pointRoutes = require("./routes/point");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/api/routes/users", usersRoutes(db));
-app.use("/api/routes/widgets", widgetsRoutes(db));
+// app.use("/api/routes/users", usersRoutes(db));
+// app.use("/api/routes/widgets", widgetsRoutes(db));
 app.use("/api/routes/map", mapRoutes(pool));
+app.use("/api/routes/point", pointRoutes(pool));
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-pool.query(
-  "INSERT INTO maps(title) VALUES('Pool.query test');",
-  (err, res) => {
-    // console.log(err, res);
-  }
-);
+// pool.query(
+//   "INSERT INTO maps(title) VALUES('Pool.query test');",
+//   (err, res) => {
+//     // console.log(err, res);
+//   }
+// );
 
-pool.query(
-  "SELECT * FROM maps;",
-  (err, res) => {
-    // console.log(err, res);
+// pool.query(
+//   "SELECT * FROM maps;",
+//   (err, res) => {
+//     // console.log(err, res);
 
-  }
-);
+//   }
+// );
 
 
 app.get("/", (req, res) => {
-
   res.render("index");
 })
 
 app.post("/", (req, res) => {
   // console.log("req.body:", req.body);
   // console.log("JSON req.body:", JSON.parse(req.body.position));
-  let pos = JSON.parse(req.body.position);// for some reason i need to store the position into a variable to extract the latitude and longitude keys
+  // let pos = JSON.parse(req.body.position);// for some reason i need to store the position into a variable to extract the latitude and longitude keys
   // let title = JSON.parse(req.body.title);
-  console.log("latitude", pos.lat);
-  console.log("longitude", pos.lng);
+  // console.log("latitude", pos.lat);
+  // console.log("longitude", pos.lng);
   // const input = req.body.position;
-  pool.query(
-    `INSERT INTO points(title, latitude, longitude)
-    VALUES(${pos.lat}, ${pos.lat}, ${pos.lng})`,
-    (err, res) => {
-      // console.log("promise res:", res);
-    }
-  );
+  // pool.query(
+  //   `INSERT INTO points(title, latitude, longitude)
+  //   VALUES(${pos.lat}, ${pos.lat}, ${pos.lng})`,
+  //   (err, res) => {
+  //     // console.log("promise res:", res);
+  //   }
+  // );
 })
 
 // pool.end();
