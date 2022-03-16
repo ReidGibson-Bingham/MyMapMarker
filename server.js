@@ -46,11 +46,13 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
+const mapRoutes = require("./routes/map");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
+app.use("/api/routes/users", usersRoutes(db));
+app.use("/api/routes/widgets", widgetsRoutes(db));
+app.use("/api/routes/map", mapRoutes(pool));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -75,22 +77,8 @@ pool.query(
 
 app.get("/", (req, res) => {
 
-  const input = req.query.text;
-
-  // console.log("req.query.text: ", input);
-  // console.log("test route");
-  // console.log("req:", req);
-  const markerData = pool.query(
-    `SELECT latitude, longitude FROM points;`,
-    (err, res) => {
-      return res;
-      // console.log("res:", res);
-    }
-  );
-
-  // res.render("index");
-
-});
+  res.render("index");
+})
 
 app.post("/", (req, res) => {
   // console.log("req.body:", req.body);
