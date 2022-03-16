@@ -14,7 +14,7 @@ function initMap() {
           lat: coordinate.latitude,
           lng: coordinate.longitude
         }
-        addMarker(location, map);
+        addMarkerToMap(location, map);
       });
       console.log("result of success: ", result);
       return result;
@@ -44,7 +44,8 @@ function initMap() {
   //This event listener calls addMarker() when the map is clicked.
   google.maps.event.addListener(map, "click", (event) => {
     if (event.latLng){
-      addMarker(event.latLng, map);
+      addMarkerToMap(event.latLng, map);
+      addMarkerToDB(event.latLng);
     }
   });
 
@@ -73,35 +74,24 @@ const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 let labelIndex = 0;
 let newMarker = [];
 // Adds a marker to the map.
-function addMarker(location, map) {
+function addMarkerToMap(location, map) {
   // Add the marker at the clicked location, and add the next-available label
   // from the array of alphabetical characters.
   let newMarker = new google.maps.Marker({
+    title: labels[labelIndex],
     position: location,
     label: labels[labelIndex++ % labels.length],
     map: map,
     //optimized: false,
-    title: `${JSON.stringify(location)}`,
+    //`${JSON.stringify(location)}`,
   });
+
   console.log("newMarker.title:", newMarker.title);
   console.log("newMarker.label:", newMarker.label);
   console.log("lat and long: ", JSON.stringify(newMarker.position));
 
 
-  if (newMarker.position) {
-    $.ajax({
-      type: "POST",
-      url: "/api/routes/point/",
-      data: {
-        position: JSON.stringify(newMarker.position),
-      },
-      // data: {message: "body"},
-      success: () => {
-        console.log("success");
-      },
-      dataType: "json"
-    });
-  }
+
 
   const contentString =
   '<div id="content">' +
@@ -120,12 +110,6 @@ function addMarker(location, map) {
           '<button id="button-save" type="submit">'+
           "Save"+
           "</button>"+
-          '<button id="button-edit" type="submit">'+
-          "edit"+
-          "</button>"+
-          '<button id="button-delete" type="submit">'+
-          "Delete"+
-          "</button>"+
         "</footer>"+
   "</form>"+
   '<p id="time-stamp">'+
@@ -142,10 +126,28 @@ const infowindow = new google.maps.InfoWindow({
     "click",
     (function (newMarker, infowindow) {
       return function () {
-        infowindow.setContent(newMarker.title);
+        // infowindow.setContent(newMarker.content);
         infowindow.open(map, newMarker);
       };
     })(newMarker, infowindow)
   );
 }
+
+function addMarkerToDB(pos) {
+
+    $.ajax({
+      type: "POST",
+      url: "/api/routes/point/",
+      data: {
+        position: JSON.stringify(pos),
+      },
+      // data: {message: "body"},
+      success: () => {
+        console.log("success");
+      },
+      dataType: "json"
+    });
+
+}
+
 

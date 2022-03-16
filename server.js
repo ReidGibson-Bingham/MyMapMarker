@@ -79,6 +79,7 @@ app.use("/api/routes/point", pointRoutes(pool));
 
 
 app.get("/", (req, res) => {
+
   res.render("index");
 })
 
@@ -98,6 +99,7 @@ app.post("/", (req, res) => {
   //   }
   // );
 })
+
 
 // pool.end();
 
