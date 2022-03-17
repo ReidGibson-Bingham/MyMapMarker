@@ -16,8 +16,8 @@ const db = new Pool(dbParams);
 db.connect();
 
 const pool = new Pool({
-  user: "jaspersm1",
-  password: "TenaCityUX",
+  user: "vagrant",
+  password: "123",
   host: "localhost",
   database: "midterm",
 });
