@@ -1,3 +1,4 @@
+
 // Client facing scripts here
 
 // Initialize and add the map
@@ -146,5 +147,7 @@ function addMarkerToDB(pos) {
     });
 
 }
+
+
 
 
