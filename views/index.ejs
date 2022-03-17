@@ -3,14 +3,16 @@
       <h1 class="text-center">Make A New Map</h1>
       <div class="col-10 offset-1">
 
-      <form action="/app.js" method="POST">
+      <form action="/" method="POST" novalidate class="validated-form">
         <div class="mb-3">
           <label class="form-label" for="title">Title</label>
-          <input class="form-control" type="text" id="title" name="map[title]">
+          <input class="form-control" type="text" id="title" name="map[title]" required>
+          <div class="valid-feedback">Looks Good!</div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="title">Description</label>
-          <input class="form-control" type="text" id="title" name="map[description]">
+          <input class="form-control" type="text" id="title" name="map[description]" required>
+          <div class="valid-feedback">Looks Good!</div>
         </div>
        <!-- The div element for the map -->
 
@@ -27,7 +29,6 @@
 </div>
 </div>
 </form>
-
 
       </div>
 
