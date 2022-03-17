@@ -16,8 +16,8 @@ const db = new Pool(dbParams);
 db.connect();
 
 const pool = new Pool({
-  user: "jaspersm1",
-  password: "TenaCityUX",
+  user: "vagrant",
+  password: "123",
   host: "localhost",
   database: "midterm",
 });
@@ -69,19 +69,6 @@ app.get("/", (req, res) => {
   res.render("index", { title: "Home Page", layout: "./layouts/full-width" });
 });
 
-// app.get("/allEats", (req, res) => {
-//   res.render("allEats", {
-//     title: "All Babies",
-//     layout: "./layouts/full-width",
-//   });
-// });
-
-// app.get("/favoriteEats", (req, res) => {
-//   res.render("favoriteEats", {
-//     title: "New Rescue",
-//     layout: "./layouts/full-width",
-//   });
-// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

@@ -1,7 +1,7 @@
 // Client facing scripts here
 $(document).ready(function () {
   console.log("ready");
-  $(document).on("click", "#button-save", (event) => {
+  $(document).on("click", ".button-save", (event) => {
     event.preventDefault();
     console.log(newMarker);
     const text = $("#point-text").val();
@@ -13,19 +13,50 @@ $(document).ready(function () {
         title: newMarker.title,
         position: JSON.stringify(newMarker.position),
       },
-      success: () => {
-        console.log("success");
-      },
       dataType: "json",
+    }).done((data) => {
+      console.log("done");
+      loadInfowindow(event.target);
     });
   });
 });
+
+const loadInfowindow = function (element) {
+  $.ajax({
+    method: "GET",
+    url: "/api/routes/point",
+    data: {
+      title: newMarker.title,
+    },
+  }).then((description) => {
+    // newMarker.infowindow.setContent(
+    //   "<div>" +
+    //     "<h1>" +
+    //     "Interested Points" +
+    //     "</h1>" +
+    //     "<p>" +
+    //     " ${description}" +
+    //     "</p>" +
+    //     "<p>" +
+    //     "timeStamp" +
+    //     "</p>" +
+    //     "</div>"
+    // );
+    const form = $(element).parent().parent();
+    form.after(`
+      <div>
+        description: ${description}
+      </div>
+    `);
+    form.remove();
+  });
+};
+
 // Initialize and add the map
 function initMap() {
   $.ajax({
     type: "get",
     url: "/api/routes/map/",
-    // data: {message: "body"},
     success: (result) => {
       result.forEach((coordinate) => {
         let location = {
@@ -34,15 +65,12 @@ function initMap() {
         };
         addMarker(location, map);
       });
-      console.log("result of success: ", result);
       return result;
     },
     dataType: "json",
   });
 
-  // The location of Richmoind 49.16186001171447, -123.13926987802597
   const richmond = { lat: 49.16186001171447, lng: -123.13926987802597 };
-  // The map, centered at richmond
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 13,
     center: richmond,
@@ -59,47 +87,33 @@ function initMap() {
   });
 
   if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(function(p) {
-    const latLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-    //console.log(p.coords.latitude);
-    //console.log(p.coords.longitude);
-    const lat = p.coords.latitude;
-    const lng = p.coords.longitude;
-   document.getElementById('latitude').textContent = lat;
-   document.getElementById('longitude').textContent = lng;
-    // Set the map center on user location
-    map.setCenter(latLng);
-    new google.maps.Marker({
-      position: latLng,
-      map,
-      title: "you are here",
+    navigator.geolocation.getCurrentPosition(function (p) {
+      const latLng = new google.maps.LatLng(
+        p.coords.latitude,
+        p.coords.longitude
+      );
+      //console.log(p.coords.latitude);
+      //console.log(p.coords.longitude);
+      const lat = p.coords.latitude;
+      const lng = p.coords.longitude;
+      document.getElementById("latitude").textContent = lat;
+      document.getElementById("longitude").textContent = lng;
+      // Set the map center on user location
+      map.setCenter(latLng);
+      new google.maps.Marker({
+        position: latLng,
+        map,
+        title: "you are here",
+      });
     });
-  });
-} else {
-  alert('Geo Location feature is not supported in this browser.');
-}
+  } else {
+    alert("Geo Location feature is not supported in this browser.");
+  }
 
   //This event listener calls addMarker() when the map is clicked.
   google.maps.event.addListener(map, "click", (event) => {
     if (event.latLng) {
       addMarker(event.latLng, map);
-      // if (newMarker.position) {
-      //   $.ajax({
-      //     type: "POST",
-      //     url: "/api/routes/point",
-      //     data: {
-      //       position: JSON.stringify(newMarker.position),
-      //       title: newMarker.label,
-      //       markerId: newMarker.markerId,
-      //       //label: JSON.stringify(newMarker.internalPosition),
-      //     },
-      //     // data: {message: "body"},
-      //     success: () => {
-      //       console.log("success");
-      //     },
-      //     dataType: "json",
-      //   });
-      // }
     }
   });
 
@@ -125,12 +139,13 @@ let newMarker = [];
 function addMarker(location, map) {
   // Add the marker at the clicked location, and add the next-available label
   // from the array of alphabetical characters.
-  // const generateRandomString = () => {
-  //   return Math.random().toString(36).replace("0.", "").substring(0, 6);
-  // };
+
   let currentLabel = labels[labelIndex++ % labels.length];
   const text = $("#point-text").val();
   //let markerId = generateRandomString();
+  // const generateRandomString = () => {
+  //   return Math.random().toString(36).replace("0.", "").substring(0, 6);
+  // };
   console.log("text inside infowindow", text);
   newMarker = new google.maps.Marker({
     position: location,
@@ -141,26 +156,7 @@ function addMarker(location, map) {
     //markerId: markerId,
     //html: document.getElementById("point-form"),
   });
-  //console.log("google location:", JSON.stringify(location));
-  //console.log("lat and long: ", JSON.stringify(newMarker.position));
 
-  // if (newMarker.position) {
-  //   $.ajax({
-  //     type: "POST",
-  //     url: "/api/routes/point",
-  //     data: {
-  //       position: JSON.stringify(newMarker.position),
-  //       title: currentLabel,
-  //       markerId: markerId
-  //       //label: JSON.stringify(newMarker.internalPosition),
-  //     },
-  //     // data: {message: "body"},
-  //     success: () => {
-  //       console.log("success");
-  //     },
-  //     dataType: "json",
-  //   });
-  // }
   //setup infowindow for more content
 
   const contentString =
@@ -177,7 +173,7 @@ function addMarker(location, map) {
     "   hello  " +
     "</textarea>" +
     '<footer class="button-container">' +
-    '<button id="button-save" type="button">' +
+    '<button class="button-save" type="button">' +
     "Save" +
     "</button>" +
     "</footer>" +
@@ -202,14 +198,4 @@ function addMarker(location, map) {
       };
     })(newMarker, infowindow)
   );
-
-  // const savePtText = function (text, marker) {
-  //   $.post("/api/point/text", text)
-  //     .then((data) => {
-  //       //console.log("load data:", data)
-  //     })
-  //     .catch((error) => {
-  //       alert("error:" + error);
-  //     });
-  // };
 }
