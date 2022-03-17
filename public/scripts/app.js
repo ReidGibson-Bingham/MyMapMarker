@@ -31,6 +31,11 @@ function initMap() {
     center: richmond,
   });
 
+  const map2 = new google.maps.Map(document.getElementById("map2"), {
+    zoom: 13,
+    center: richmond,
+  });
+
   // Create an info window to share between markers.
   // const infowindow = new google.maps.InfoWindow();
   // ^^ this one may be redundant
@@ -149,5 +154,24 @@ function addMarkerToDB(pos) {
 }
 
 
+// const createDiv = function(params) {
+
+//   //takes in a tweet object and is responsible for returning a tweet <article> element containing the entire HTML structure of the tweet.
+//   const $div = ``;
+
+//   // $('#placed-tweet').text(`${text}`);
+
+//   return $div;
+
+// }
+
+// $('#map').append(createDiv());
 
 
+// $('#tweet-text').keypress(function(event) {
+//   count++;
+//   input = $('#tweet-text').val();
+
+//   console.log("input: ", input);
+
+// });

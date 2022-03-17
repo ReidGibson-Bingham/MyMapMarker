@@ -33,37 +33,67 @@
       </form>
 
     </section>
-    <!--The div element for the map -->
-    <div id="map"></div>
 
-    <script>
+    <div id="maps">
+        <!--The div element for the map -->
+      <div id="map" style="width:900px; height:500px; margin-left:80px;"></div>
 
-
-    </script>
-
-    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWxHpGLzdtUW8alNMHhfiQgSHpPW6vsZk&callback=initMap&libraries=&v=weekly"
-      async
-    ></script>
-
-    <section id="new-tweet">
-      <!-- <h2>Compose Tweet</h2> -->
-      <form method="POST" action="/tweets/" id="form">
-        <!-- <form> -->
-        <!-- <label for="tweet-text" id="text">What are you humming about?</label> -->
-
-        <div>
-          <button class="button" type="submit">Save</button>
-        </div>
+      <div id="map2" style="width:700px; height:500px; margin-left:80px;"></div>
 
 
-      <!-- <img src="/images/profile-hex.png"> -->
+      <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+      <!-- <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWxHpGLzdtUW8alNMHhfiQgSHpPW6vsZk&callback=initMap&libraries=&v=weekly"
+        async
+      ></script> -->
 
-    </form>
-      <!-- my form tag is supposed to be above my tweet-display... i'm leaving it here for now -->
 
-    </section>
+      <!-- <div id="map_canvas" style="width:700px; height:500px; margin-left:80px;"></div>
+      <div id="map_canvas2" style="width:700px; height:500px; margin-left:80px;"></div>
+
+      <script type="text/javascript">
+        var map, map2;
+
+        function initMap(condition) {
+            // create the maps
+            var myOptions = {
+                zoom: 14,
+                center: new google.maps.LatLng(0.0, 0.0),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+            map2 = new google.maps.Map(document.getElementById("map_canvas2"), myOptions);
+        }
+        </script> -->
+
+        <section id="save-map">
+          <!-- <h2>Compose Tweet</h2> -->
+          <form method="POST" action="/" id="form">
+            <!-- <form> -->
+            <!-- <label for="tweet-text" id="text">What are you humming about?</label> -->
+
+            <div>
+              <button class="button" type="submit">Save</button>
+            </div>
+
+
+          <!-- <img src="/images/profile-hex.png"> -->
+
+        </form>
+          <!-- my form tag is supposed to be above my tweet-display... i'm leaving it here for now -->
+
+        </section>
+
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWxHpGLzdtUW8alNMHhfiQgSHpPW6vsZk&callback=initMap&libraries=&v=weekly"
+        async
+      ></script>
+      <!-- the api script must be placed after the maps -->
+
+    </div>
+    <!-- end of the maps div -->
+
 
 
 </body>
