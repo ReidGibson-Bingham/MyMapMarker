@@ -59,20 +59,26 @@ function initMap() {
   });
 
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(p) {
-      const latLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
-      // Set the map center on user location
-      map.setCenter(latLng);
-      new google.maps.Marker({
-        position: latLng,
-        map,
-        title: "you are here",
-      });
+  navigator.geolocation.getCurrentPosition(function(p) {
+    const latLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+    //console.log(p.coords.latitude);
+    //console.log(p.coords.longitude);
+    const lat = p.coords.latitude;
+    const lng = p.coords.longitude;
+   document.getElementById('latitude').textContent = lat;
+   document.getElementById('longitude').textContent = lng;
+    // Set the map center on user location
+    map.setCenter(latLng);
+    new google.maps.Marker({
+      position: latLng,
+      map,
+      title: "you are here",
     });
-  } else {
-    alert('Geo Location feature is not supported in this browser.');
-  }
-  
+  });
+} else {
+  alert('Geo Location feature is not supported in this browser.');
+}
+
   //This event listener calls addMarker() when the map is clicked.
   google.maps.event.addListener(map, "click", (event) => {
     if (event.latLng) {

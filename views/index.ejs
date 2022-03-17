@@ -13,8 +13,10 @@
           <input class="form-control" type="text" id="title" name="map[description]">
         </div>
        <!-- The div element for the map -->
-       
+
  <div id="map"></div>
+ <span id="latitude"></span>
+<span id="longitude"></span>
  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
  <script
       src="https://maps.googleapis.com/maps/api/js?key=<%=process.env.GOOGLE_MAP_API_KEY%>&callback=initMap&libraries=&v=weekly"
