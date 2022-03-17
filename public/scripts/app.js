@@ -70,7 +70,7 @@ function initMap() {
     //addMarker(richmond, map);
 }
 
-const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const labels = "123456789";
 let labelIndex = 0;
 let newMarker = [];
 // Adds a marker to the map.
@@ -80,7 +80,7 @@ function addMarkerToMap(location, map) {
   let newMarker = new google.maps.Marker({
     title: labels[labelIndex],
     position: location,
-    label: labels[labelIndex++ % labels.length],
+    label: location,
     map: map,
     //optimized: false,
     //`${JSON.stringify(location)}`,
@@ -90,14 +90,11 @@ function addMarkerToMap(location, map) {
   console.log("newMarker.label:", newMarker.label);
   console.log("lat and long: ", JSON.stringify(newMarker.position));
 
-
-
-
   const contentString =
   '<div id="content">' +
   '<div id="siteNotice">' +
   "</div>" +
-  '<h1 id="firstHeading" class="firstHeading">Intersting Point</h1>' +
+  `<h1 id="firstHeading" class="firstHeading"> new point ${newMarker.title}</h1>` +
   '<div id="bodyContent">' +
   '<form id="point-form">'+
         '<label id = "text-label" for="point-text">'+
