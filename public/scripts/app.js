@@ -1,8 +1,41 @@
 
 // Client facing scripts here
+count = 3;
+$(document).ready(function() {
+  console.log("client.js ready");
+
+  //responsible for returning a new map
+  const createDiv = function() {
+
+    const $div =`<div id="map${count}" style="width:700px; height:500px; margin-left:80px;"></div>` ;
+
+    new google.maps.Map(document.getElementById(`map${count}`), {
+      zoom: 13,
+      center: { lat: 49, lng: -123 }
+    });
+
+    count++;
+
+    return $div;
+
+  }
+
+  $("button").click(function() {
+
+    alert( "Handler for .click() called." );
+    $('#maps').append(createDiv());
+    alert("div created");
+
+  });
+
+  console.log("important test message", createDiv());
+
+});
 
 // Initialize and add the map
 function initMap() {
+
+
 
   $.ajax({
     type: "get",
@@ -154,24 +187,4 @@ function addMarkerToDB(pos) {
 }
 
 
-// const createDiv = function(params) {
 
-//   //takes in a tweet object and is responsible for returning a tweet <article> element containing the entire HTML structure of the tweet.
-//   const $div = ``;
-
-//   // $('#placed-tweet').text(`${text}`);
-
-//   return $div;
-
-// }
-
-// $('#map').append(createDiv());
-
-
-// $('#tweet-text').keypress(function(event) {
-//   count++;
-//   input = $('#tweet-text').val();
-
-//   console.log("input: ", input);
-
-// });
