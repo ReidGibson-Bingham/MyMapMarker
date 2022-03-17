@@ -1,0 +1,40 @@
+<h1>All Eats</h1>
+<div>
+  <a href="index">Add Your New Eat</a>
+  <a href="favoriteEats">Your Favorite Eats</a>
+</div>
+<h2>All Maps</h2>
+<% for (let map of maps){%>
+<div class="card" mb-3>
+  <div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-mg-8">
+      <div class="card-body">
+        <h5 class="card-title">
+          <small class="text-muted">Title:</small>
+            <%= map.title %>
+        </h5>
+        <p class="card-text">
+          <small class="text-muted">Description:</small>
+          <%= map.description %>
+        </p>
+        <p class="card-text">
+          <small class="text-muted"
+            >Name of Map Creator
+            <!-- sth like map_user !-->
+          </small>
+        </p>
+        <p class="card-text">
+        <small class="text-muted">taken at latitude</small><%= map.latitude %></p>
+        <p class="card-text">
+          <small class="text-muted">taken at longitude</small><%= map.longitude %></p>
+        <a class="btn btn-primary" href="#"
+          >View
+          <!-- map.title !-->
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<% }%>

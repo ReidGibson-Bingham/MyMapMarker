@@ -65,8 +65,8 @@ function initMap() {
     //console.log(p.coords.longitude);
     const lat = p.coords.latitude;
     const lng = p.coords.longitude;
-   document.getElementById('latitude').textContent = lat;
-   document.getElementById('longitude').textContent = lng;
+   document.getElementById('latitude').value = lat;
+   document.getElementById('longitude').value = lng;
     // Set the map center on user location
     map.setCenter(latLng);
     new google.maps.Marker({

@@ -3,29 +3,29 @@
       <h1 class="text-center">Make A New Map</h1>
       <div class="col-10 offset-1">
 
-      <form action="/" method="POST" novalidate class="validated-form">
+      <form action="/api/routes/newMap/" id="new_map" method="POST" novalidate class="validated-form">
         <div class="mb-3">
           <label class="form-label" for="title">Title</label>
-          <input class="form-control" type="text" id="title" name="map[title]" required>
+          <input class="form-control" type="text" id="title" name="title" required/>
           <div class="valid-feedback">Looks Good!</div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="title">Description</label>
-          <input class="form-control" type="text" id="title" name="map[description]" required>
+          <input class="form-control" type="text" id="description" name="description" required/>
           <div class="valid-feedback">Looks Good!</div>
         </div>
        <!-- The div element for the map -->
 
  <div id="map"></div>
- <span id="latitude"></span>
-<span id="longitude"></span>
+ <input id="latitude" type="hidden" name="latitude"/>
+ <input id="longitude" type="hidden" name="longitude"/>
  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
  <script
       src="https://maps.googleapis.com/maps/api/js?key=<%=process.env.GOOGLE_MAP_API_KEY%>&callback=initMap&libraries=&v=weekly"
       async
     ></script>
 <div class="mt-3 mb-3">
-<button class="btn btn-success ">Create</button>
+<button class="btn btn-success" type="submit" id="button-create">Create</button>
 </div>
 </div>
 </form>
