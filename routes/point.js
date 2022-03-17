@@ -8,6 +8,7 @@ module.exports = (db) => {
     console.log("title:", title);
     console.log("latitude", pos.lat);
     console.log("longitude", pos.lng);
+    // console.log("map id ")
     //console.log("title");
     db.query(
       `INSERT INTO points(title, latitude, longitude)

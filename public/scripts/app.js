@@ -1,7 +1,12 @@
 
 // Client facing scripts here
-count = 3;
+
 $(document).ready(function() {
+
+  ////////////
+  count = 0;//
+  ////////////
+
   console.log("client.js ready");
 
   //responsible for returning a new map
@@ -9,24 +14,48 @@ $(document).ready(function() {
 
     const $div =`<div id="map${count}" style="width:700px; height:500px; margin-left:80px;"></div>` ;
 
-    new google.maps.Map(document.getElementById(`map${count}`), {
-      zoom: 13,
-      center: { lat: 49, lng: -123 }
-    });
-
-    count++;
-
     return $div;
 
   }
 
+  //////////////////
+  let newMap = {};//
+  //////////////////
+
   $("button").click(function() {
 
     alert( "Handler for .click() called." );
-    $('#maps').append(createDiv());
+    $('#maps').prepend(createDiv());
     alert("div created");
+    console.log(`count: ${count}`);
+
+
+    newMap = new google.maps.Map(document.getElementById(`map${count}`), {
+      zoom: 13,
+      center: { lat: 49, lng: -123 }
+    });
+
+    console.log("new map: ", newMap);
+
+    const centerMark = new google.maps.Marker({
+      position: { lat: 49, lng: -123 },
+      map: newMap
+      //center marker when creating a new map
+    });
+
+    google.maps.event.addListener(newMap, "click", (event) => {
+      if (event.latLng){
+        addMarkerToMap(event.latLng, newMap);
+        addMarkerToDB(event.latLng);
+      }
+    });
+
+    //////////
+    count++;//
+    //////////
 
   });
+
 
   console.log("important test message", createDiv());
 
@@ -34,8 +63,6 @@ $(document).ready(function() {
 
 // Initialize and add the map
 function initMap() {
-
-
 
   $.ajax({
     type: "get",
@@ -60,11 +87,6 @@ function initMap() {
   const richmond = { lat: 49.16186001171447, lng: -123.13926987802597 };
   // The map, centered at richmond
   const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 13,
-    center: richmond,
-  });
-
-  const map2 = new google.maps.Map(document.getElementById("map2"), {
     zoom: 13,
     center: richmond,
   });
@@ -152,9 +174,9 @@ function addMarkerToMap(location, map) {
   "(last visited June 22, 2009).</p>" +
   "</div>" +
   "</div>";
-const infowindow = new google.maps.InfoWindow({
-  content: contentString,
-});
+  const infowindow = new google.maps.InfoWindow({
+    content: contentString,
+  });
   // ^^ this event listener is for the info window on the marker
 
   google.maps.event.addListener(
@@ -176,6 +198,7 @@ function addMarkerToDB(pos) {
       url: "/api/routes/point/",
       data: {
         position: JSON.stringify(pos),
+        map_id: centerLocation
       },
       // data: {message: "body"},
       success: () => {
