@@ -16,8 +16,8 @@ const db = new Pool(dbParams);
 db.connect();
 
 const pool = new Pool({
-  user: "jaspersm1",
-  password: "TenaCityUX",
+  user: "vagrant",
+  password: "123",
   host: "localhost",
   database: "midterm",
 });
@@ -49,6 +49,7 @@ app.use(
 // const widgetsRoutes = require("./routes/widgets");
 const mapRoutes = require("./routes/map");
 const pointRoutes = require("./routes/point");
+const newMapRoutes = require("./routes/newMap");
 //const descriptionRoutes = require("./routes/description");
 
 // Mount all resource routes
@@ -57,6 +58,7 @@ const pointRoutes = require("./routes/point");
 //app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/routes/map", mapRoutes(pool));
 app.use("/api/routes/point", pointRoutes(pool));
+app.use("/api/routes/newMap", newMapRoutes(pool));
 //app.use("/api/routes/description", descriptionRoutes(pool));
 
 // Note: mount other resources here, using the same pattern above
@@ -69,20 +71,22 @@ app.get("/", (req, res) => {
   res.render("index", { title: "Home Page", layout: "./layouts/full-width" });
 });
 
-// app.get("/allEats", (req, res) => {
-//   res.render("allEats", {
-//     title: "All Babies",
-//     layout: "./layouts/full-width",
-//   });
-// });
-
-// app.get("/favoriteEats", (req, res) => {
-//   res.render("favoriteEats", {
-//     title: "New Rescue",
-//     layout: "./layouts/full-width",
-//   });
-// });
-
+app.get("/existingMap", (req, res) => {
+  db.query(`SELECT * FROM maps;`)
+    .then((data) => {
+      const maps = data.rows;
+      console.log("maps", maps);
+      res.render("existingMap", {
+        title: "existingMaps",
+        layout: "./layouts/full-width",
+        maps,
+      });
+      // res.render("existingMap", { maps });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
