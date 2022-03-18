@@ -56,10 +56,49 @@ $(document).ready(function() {
 
   });
 
-
   console.log("important test message", createDiv());
 
+  $(document).on("click", ".button-save", (event) => {
+    event.preventDefault();
+    //console.log(newMarker);
+    const text = $("#point-text").val();
+    $.ajax({
+      type: "post",
+      url: "/api/routes/point",
+      data: {
+        description: text,
+        title: newMarker.title,
+        position: JSON.stringify(newMarker.position),
+      },
+      dataType: "json",
+    }).done((data) => {
+      loadInfowindow(event.target);
+    });
+  });
+
+  const loadInfowindow = function (window) {
+  $.ajax({
+    method: "GET",
+    url: "/api/routes/point",
+    data: {
+      title: newMarker.title,
+    },
+  }).then((description) => {
+    const form = $(window).parent().parent();
+    //add text after save
+    form.after(`
+      <div>
+        description: ${description}
+      </div>
+    `);
+    //remove form only keep description
+    form.remove();
+  });
+  };
+
 });
+
+//infowindow texttopost/get
 
 // Initialize and add the map
 function initMap() {
@@ -95,7 +134,7 @@ function initMap() {
   // const infowindow = new google.maps.InfoWindow();
   // ^^ this one may be redundant
 
-  // The marker, positioned at richmond
+  // The marker, positioned at richmond (the center point)
   const marker = new google.maps.Marker({
     position: richmond,
     map: map,
@@ -106,7 +145,7 @@ function initMap() {
   google.maps.event.addListener(map, "click", (event) => {
     if (event.latLng){
       addMarkerToMap(event.latLng, map);
-      addMarkerToDB(event.latLng);
+      // addMarkerToDB(event.latLng);
     }
   });
 
@@ -116,16 +155,18 @@ function initMap() {
   //   //console.log("title is", marker.title);
   //   infowindow.open(marker.getMap(), marker);
   // });
-  google.maps.event.addListener(
-    marker,
-    "click",
-    (function (marker, infowindow) {
-      return function () {
-        infowindow.setContent(marker.title);
-        infowindow.open(map, marker);
-      };
-    })(marker, infowindow)
-    );
+
+  // for the center marker
+  // google.maps.event.addListener(
+  //   marker,
+  //   "click",
+  //   (function (marker, infowindow) {
+  //     return function () {
+  //       infowindow.setContent(marker.title);
+  //       infowindow.open(map, marker);
+  //     };
+  //   })(marker, infowindow)
+  //   );
 
     //Add a marker at the center of the map.
     //addMarker(richmond, map);
@@ -211,3 +252,27 @@ function addMarkerToDB(pos) {
 
 
 
+
+
+
+// dongs' code
+
+// ///addd
+// marker
+
+// const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+// let labelIndex = 0;
+// // let newMarker = [];
+// // Adds a marker to the map.
+// function addMarker(location, map) {
+//   // Add the marker at the clicked location, and add the next-available label
+//   // from the array of alphabetical characters.
+//   let currentLabel = labels[labelIndex++ % labels.length];
+
+//   newMarker = new google.maps.Marker({
+//     position: location,
+//     label: currentLabel,
+//     map: map,
+//     //optimized: false,
+//     title: currentLabel,
+//   });
