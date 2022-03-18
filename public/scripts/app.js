@@ -58,23 +58,23 @@ $(document).ready(function() {
 
   console.log("important test message", createDiv());
 
-  $(document).on("click", ".button-save", (event) => {
-    event.preventDefault();
-    //console.log(newMarker);
-    const text = $("#point-text").val();
-    $.ajax({
-      type: "post",
-      url: "/api/routes/point",
-      data: {
-        description: text,
-        title: newMarker.title,
-        position: JSON.stringify(newMarker.position),
-      },
-      dataType: "json",
-    }).done((data) => {
-      loadInfowindow(event.target);
-    });
-  });
+  // $(document).on("click", ".button-save", (event) => {
+  //   event.preventDefault();
+  //   //console.log(newMarker);
+  //   const text = $("#point-text").val();
+  //   $.ajax({
+  //     type: "post",
+  //     url: "/api/routes/point",
+  //     data: {
+  //       description: text,
+  //       title: newMarker.title,
+  //       position: JSON.stringify(newMarker.position),
+  //     },
+  //     dataType: "json",
+  //   }).done((data) => {
+  //     loadInfowindow(event.target);
+  //   });
+  // });
 
   const loadInfowindow = function (window) {
   $.ajax({
