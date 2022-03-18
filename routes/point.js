@@ -5,12 +5,13 @@ module.exports = (db) => {
   router.post("/", (req, res) => {
     let pos = JSON.parse(req.body.position);
     let title = req.body.title;
-    console.log("post", title);
+    let mapId = req.body.maptitle;
+    console.log("post", req.body);
     let description = req.body.description;
     db.query(
-      `INSERT INTO points(title, latitude, longitude, description)
-      VALUES($1, $2, $3, $4)`,
-      [title, pos.lat, pos.lng, description]
+      `INSERT INTO points(title, latitude, longitude, description,map_id)
+      VALUES($1, $2, $3, $4, $5)`,
+      [title, pos.lat, pos.lng, description, mapId]
     ).then(() => {
       res.send({ status: "sucessful post" });
     });

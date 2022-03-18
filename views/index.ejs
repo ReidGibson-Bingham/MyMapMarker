@@ -3,27 +3,28 @@
       <h1 class="text-center">Make A New Map</h1>
       <div class="col-10 offset-1">
 
-      <form action="/app.js" method="POST">
+      <form action="/api/routes/newMap/" id="new_map" method="POST">
         <div class="mb-3">
           <label class="form-label" for="title">Title</label>
-          <input class="form-control" type="text" id="title" name="map[title]">
+          <input class="form-control" type="text" id="map_title" name="title">
         </div>
         <div class="mb-3">
           <label class="form-label" for="title">Description</label>
-          <input class="form-control" type="text" id="title" name="map[description]">
+          <input class="form-control" type="text" id="title" name="description">
         </div>
        <!-- The div element for the map -->
 
  <div id="map"></div>
- <span id="latitude"></span>
-<span id="longitude"></span>
+ <input id="latitude" type="hidden" name="latitude"/>
+<input id="longitude" type="hidden" name="longitude"/>
+
  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
  <script
       src="https://maps.googleapis.com/maps/api/js?key=<%=process.env.GOOGLE_MAP_API_KEY%>&callback=initMap&libraries=&v=weekly"
       async
     ></script>
 <div class="mt-3 mb-3">
-<button class="btn btn-success ">Create</button>
+<button class="btn btn-success" type="submit" id="button-create">Create</button>
 </div>
 </div>
 </form>
